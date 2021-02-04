@@ -13,7 +13,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val sharedPref = getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
+        val sharedPref = getSharedPreferences(LoginActivity.SHARED_PREF_FILENAME, Context.MODE_PRIVATE)
         val userIsLoggedIn = sharedPref.getBoolean(LoginActivity.LOGGED_IN_KEY, false)
 
         val activityIntent = if (userIsLoggedIn) {

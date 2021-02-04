@@ -11,8 +11,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.jorfald.moreactivities.ui.main.MainActivity
 import com.jorfald.moreactivities.R
+import com.jorfald.moreactivities.ui.main.MainActivity
 
 class LoginFragment : Fragment() {
 
@@ -49,7 +49,7 @@ class LoginFragment : Fragment() {
 
             if (viewModel.correctCredentials(username, password)) {
                 val sharedPref = activity?.getSharedPreferences(
-                    "shared_prefs",
+                    LoginActivity.SHARED_PREF_FILENAME,
                     Context.MODE_PRIVATE
                 )
                 sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, true)?.apply()
