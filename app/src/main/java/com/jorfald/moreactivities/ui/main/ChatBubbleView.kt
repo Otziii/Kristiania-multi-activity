@@ -34,18 +34,18 @@ class ChatBubbleView(context: Context) : ConstraintLayout(context) {
         if (isSelfAuthor) {
             chatTextView.background = ContextCompat.getDrawable(context, R.drawable.rounded_blue_bg)
 
+            authorTextView.textAlignment = TEXT_ALIGNMENT_VIEW_END
+
             params.leftToLeft = LayoutParams.UNSET
             params.rightToRight = authorTextView.id
-
-            authorTextView.textAlignment = TEXT_ALIGNMENT_VIEW_END
         } else {
             chatTextView.background =
                 ContextCompat.getDrawable(context, R.drawable.rounded_green_bg)
 
+            authorTextView.textAlignment = TEXT_ALIGNMENT_VIEW_START
+
             params.rightToRight = LayoutParams.UNSET
             params.leftToLeft = authorTextView.id
-
-            authorTextView.textAlignment = TEXT_ALIGNMENT_VIEW_START
         }
     }
 }

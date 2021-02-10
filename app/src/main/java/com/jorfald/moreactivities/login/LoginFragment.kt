@@ -43,9 +43,15 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setButtons()
+    }
+
+    private fun setButtons() {
         loginButton.setOnClickListener {
             val username = usernameEditText.text.toString().toLowerCase()
             val password = passwordEditText.text.toString().toLowerCase()
+
+            //TODO: Log in user through API
 
             if (viewModel.correctCredentials(username, password)) {
                 val sharedPref = activity?.getSharedPreferences(

@@ -6,7 +6,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
 
 class ChatAdapter(
-    private val dataSet: List<ChatObject>
+    private var dataSet: List<ChatObject>
 ) : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatViewHolder {
@@ -22,14 +22,20 @@ class ChatAdapter(
 
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chatObject = dataSet[position]
-        holder.view.setChatText(chatObject.chatText)
-        holder.view.setAuthorText(chatObject.authorName)
 
-        holder.view.setSelfAuthor(chatObject.iAmAuthor)
+        holder.view.setChatText(chatObject.message)
+        holder.view.setAuthorText(chatObject.userName.capitalize())
+
+        holder.view.setSelfAuthor(chatObject.userId == "9ujioisdsh80")
     }
 
     override fun getItemCount(): Int {
         return dataSet.size
+    }
+
+    fun updateData(newData: List<ChatObject>) {
+        dataSet = newData
+        notifyDataSetChanged()
     }
 
     inner class ChatViewHolder(

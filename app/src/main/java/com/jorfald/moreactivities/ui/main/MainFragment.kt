@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +24,6 @@ class MainFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var chatAdapter: ChatAdapter
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,20 +33,34 @@ class MainFragment : Fragment() {
         logOutButton = view.findViewById(R.id.log_out_button)
         recyclerView = view.findViewById(R.id.chat_recycler_view)
 
-        return view
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setButtonListeners()
         initRecyclerView()
 
+        viewModel.getChatMessages(
+            requireContext(),
+            { chatMessages ->
+                chatAdapter.updateData(chatMessages)
+                recyclerView.scrollToPosition(chatMessages.size - 1)
+            },
+            {
+                Toast.makeText(
+                    context,
+                    "Noe gikk galt. Kunne ikke hente meldinger.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        )
+    }
+
+    private fun setButtonListeners() {
         logOutButton.setOnClickListener {
             val sharedPref = activity?.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
             sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, false)?.apply()
@@ -58,17 +72,13 @@ class MainFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-
-
-        recyclerView.layoutManager = LinearLayoutManager(context)
+        val linearLayoutManager = LinearLayoutManager(context)
+        recyclerView.layoutManager = linearLayoutManager
 
         chatAdapter = ChatAdapter(
-            listOf(
-                ChatObject("Hei på deg", "Per", false),
-                ChatObject("Du er kul", "Ola", true),
-                ChatObject("Takk for det.", "Per", false)
-            )
+            listOf()
         )
+
         recyclerView.adapter = chatAdapter
     }
 }

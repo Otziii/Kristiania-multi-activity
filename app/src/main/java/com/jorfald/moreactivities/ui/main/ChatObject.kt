@@ -1,7 +1,7 @@
 package com.jorfald.moreactivities.ui.main
 
-class ChatObject(
-    val chatText: String,
-    val authorName: String,
-    val iAmAuthor: Boolean
+data class ChatObject(
+    val userId: String,
+    val userName: String,
+    val message: String
 )
