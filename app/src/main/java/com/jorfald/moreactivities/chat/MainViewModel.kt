@@ -1,4 +1,4 @@
-package com.jorfald.moreactivities.ui.main
+package com.jorfald.moreactivities.chat
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
@@ -7,6 +7,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jorfald.moreactivities.chat.ChatObject
 import java.lang.reflect.Type
 
 

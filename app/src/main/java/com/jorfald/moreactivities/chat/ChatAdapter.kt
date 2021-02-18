@@ -1,4 +1,4 @@
-package com.jorfald.moreactivities.ui.main
+package com.jorfald.moreactivities.chat
 
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT

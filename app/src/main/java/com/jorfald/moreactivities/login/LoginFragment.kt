@@ -11,8 +11,9 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.android.volley.toolbox.Volley
 import com.jorfald.moreactivities.R
-import com.jorfald.moreactivities.ui.main.MainActivity
+import com.jorfald.moreactivities.chat.MainActivity
 
 class LoginFragment : Fragment() {
 
@@ -48,23 +49,27 @@ class LoginFragment : Fragment() {
 
     private fun setButtons() {
         loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString().toLowerCase()
-            val password = passwordEditText.text.toString().toLowerCase()
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
 
-            //TODO: Log in user through API
+            viewModel.logInUser(
+                Volley.newRequestQueue(requireContext()),
+                username,
+                password
+            ) { success ->
+                if (success) {
+                    val sharedPref = activity?.getSharedPreferences(
+                        LoginActivity.SHARED_PREF_FILENAME,
+                        Context.MODE_PRIVATE
+                    )
+                    sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, true)?.apply()
 
-            if (viewModel.correctCredentials(username, password)) {
-                val sharedPref = activity?.getSharedPreferences(
-                    LoginActivity.SHARED_PREF_FILENAME,
-                    Context.MODE_PRIVATE
-                )
-                sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, true)?.apply()
-
-                val intent = Intent(activity, MainActivity::class.java)
-                intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
-                startActivity(intent)
-            } else {
-                Toast.makeText(context, "Wrong username or password!", Toast.LENGTH_LONG).show()
+                    val intent = Intent(activity, MainActivity::class.java)
+                    intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(context, "Wrong username or password!", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }

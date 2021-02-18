@@ -1,13 +1,13 @@
-package com.jorfald.moreactivities
+package com.jorfald.moreactivities.splash
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.jorfald.moreactivities.R
+import com.jorfald.moreactivities.chat.MainActivity
 import com.jorfald.moreactivities.login.LoginActivity
-import com.jorfald.moreactivities.splash.SplashViewModel
-import com.jorfald.moreactivities.ui.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.jorfald.moreactivities.ui.main
+package com.jorfald.moreactivities.chat
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

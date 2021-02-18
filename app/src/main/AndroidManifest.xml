@@ -13,7 +13,7 @@
         android:theme="@style/Theme.MoreActivities">
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".splash.SplashActivity"
             android:label="@string/title_activity_splash"
             android:noHistory="true">
             <intent-filter>
@@ -26,7 +26,7 @@
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login" />
 
-        <activity android:name=".ui.main.MainActivity" />
+        <activity android:name=".chat.MainActivity" />
     </application>
 
 </manifest>

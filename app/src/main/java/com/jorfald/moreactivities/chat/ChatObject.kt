@@ -1,4 +1,4 @@
-package com.jorfald.moreactivities.ui.main
+package com.jorfald.moreactivities.chat
 
 data class ChatObject(
     val userId: String,
