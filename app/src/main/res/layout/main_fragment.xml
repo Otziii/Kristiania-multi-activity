@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.main.MainFragment">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/log_out_button"
@@ -28,10 +27,24 @@
 
     <EditText
         android:id="@+id/chat_input"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_medium"
         android:hint="Write your message..."
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/send_message_button" />
+
+    <Button
+        android:id="@+id/send_message_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/blue"
+        android:text="Send"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@id/chat_input"
+        app:layout_constraintLeft_toRightOf="@id/chat_input"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/chat_input" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

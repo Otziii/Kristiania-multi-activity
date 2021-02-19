@@ -26,7 +26,7 @@ class ChatAdapter(
         holder.view.setChatText(chatObject.message)
         holder.view.setAuthorText(chatObject.userName.capitalize())
 
-        holder.view.setSelfAuthor(chatObject.userId == "9ujioisdsh80")
+        holder.view.setSelfAuthor(chatObject.userId == "wgV7RMZXD2")
     }
 
     override fun getItemCount(): Int {
@@ -36,6 +36,10 @@ class ChatAdapter(
     fun updateData(newData: List<ChatObject>) {
         dataSet = newData
         notifyDataSetChanged()
+    }
+
+    fun addInstance(chatObject: ChatObject) {
+        updateData(dataSet + chatObject)
     }
 
     inner class ChatViewHolder(

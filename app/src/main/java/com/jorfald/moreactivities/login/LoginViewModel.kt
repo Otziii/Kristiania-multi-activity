@@ -13,7 +13,7 @@ class LoginViewModel : ViewModel() {
     }
 
     fun logInUser(requestQueue: RequestQueue, username: String, password: String, callBack: (Boolean) -> Unit) {
-        var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/login"
+        var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/login"
         url += "?username=$username&password=$password"
 
         val stringRequest = StringRequest(
