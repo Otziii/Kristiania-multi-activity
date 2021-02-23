@@ -8,13 +8,9 @@ import com.google.gson.Gson
 import java.lang.Exception
 
 class LoginViewModel : ViewModel() {
-    fun correctCredentials(username: String, password: String): Boolean {
-        return username == "øivind" && password == "1234"
-    }
-
     fun logInUser(requestQueue: RequestQueue, username: String, password: String, callBack: (Boolean) -> Unit) {
         var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/login"
-        url += "?username=$username&password=$password"
+        url += "?userName=$username&password=$password"
 
         val stringRequest = StringRequest(
             Request.Method.GET,
@@ -29,8 +25,6 @@ class LoginViewModel : ViewModel() {
                 }
             },
             { errorObject ->
-                print("")
-
                 callBack(false)
             }
         )
