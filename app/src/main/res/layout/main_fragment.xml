@@ -21,6 +21,8 @@
         android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/space_small"
+        android:layout_marginEnd="@dimen/space_small"
         app:layout_constraintBottom_toTopOf="@id/chat_input"
         app:layout_constraintTop_toBottomOf="@id/log_out_button"
         tools:listitem="@layout/chat_bubble" />
@@ -39,6 +41,7 @@
         android:id="@+id/send_message_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/space_small"
         android:backgroundTint="@color/blue"
         android:text="Send"
         android:textAllCaps="false"

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.Volley
 import com.jorfald.moreactivities.R
+import com.jorfald.moreactivities.hideKeyboard
 import com.jorfald.moreactivities.login.LoginActivity
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
@@ -29,7 +30,7 @@ class MainFragment : Fragment() {
     private lateinit var chatInput: EditText
     private lateinit var sendButton: Button
 
-    private lateinit var timer: Timer
+    private var timer: Timer? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,7 +64,10 @@ class MainFragment : Fragment() {
 
     private fun setButtonListeners() {
         logOutButton.setOnClickListener {
-            val sharedPref = activity?.getSharedPreferences("shared_prefs", Context.MODE_PRIVATE)
+            val sharedPref = activity?.getSharedPreferences(
+                LoginActivity.SHARED_PREF_FILENAME,
+                Context.MODE_PRIVATE
+            )
             sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, false)?.apply()
 
             val intent = Intent(activity, LoginActivity::class.java)
@@ -78,8 +82,10 @@ class MainFragment : Fragment() {
             if (text.isNotEmpty()) {
                 viewModel.sendChatMessage(Volley.newRequestQueue(context), chatObject) { success ->
                     if (success) {
+                        activity?.hideKeyboard()
                         chatInput.setText("")
                         chatAdapter.addInstance(chatObject)
+                        scrollToBottom()
                     } else {
                         Toast.makeText(
                             context,
@@ -108,7 +114,7 @@ class MainFragment : Fragment() {
             Volley.newRequestQueue(context),
             { chatMessages ->
                 chatAdapter.updateData(chatMessages)
-                recyclerView.scrollToPosition(chatMessages.size - 1)
+                scrollToBottom()
             },
             {
                 Toast.makeText(
@@ -120,7 +126,15 @@ class MainFragment : Fragment() {
         )
     }
 
+    private fun scrollToBottom() {
+        recyclerView.scrollToPosition((recyclerView.adapter?.itemCount ?: 1) - 1)
+    }
+
     private fun startChatFetchTimer() {
+        if (timer != null) {
+            return
+        }
+
         timer = fixedRateTimer("chatFetchTimer", false, 0L, 5 * 1000) {
             getChatMessages()
         }
@@ -129,7 +143,8 @@ class MainFragment : Fragment() {
     override fun onPause() {
         super.onPause()
 
-        timer.cancel()
+        timer?.cancel()
+        timer = null
     }
 }
 

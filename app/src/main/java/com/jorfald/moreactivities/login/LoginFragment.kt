@@ -53,7 +53,7 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             viewModel.logInUser(
-                Volley.newRequestQueue(requireContext()),
+                Volley.newRequestQueue(context),
                 username,
                 password
             ) { success ->

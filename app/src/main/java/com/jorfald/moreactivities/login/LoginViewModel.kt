@@ -21,7 +21,7 @@ class LoginViewModel : ViewModel() {
 
                     callBack(true)
                 } catch (e: Exception) {
-                    print(e)
+                    callBack(false)
                 }
             },
             { errorObject ->
@@ -30,7 +30,5 @@ class LoginViewModel : ViewModel() {
         )
 
         requestQueue.add(stringRequest)
-
-
     }
 }
