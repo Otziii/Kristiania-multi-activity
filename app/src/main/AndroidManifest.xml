@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MoreActivities">
+        <activity
+            android:name=".tabbar.MainActivity"
+            android:label="@string/title_activity_main" />
 
         <activity
             android:name=".splash.SplashActivity"
@@ -21,12 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".login.LoginActivity"
             android:label="@string/title_activity_login" />
-
-        <activity android:name=".chat.MainActivity" />
     </application>
 
 </manifest>

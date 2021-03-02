@@ -12,8 +12,11 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.toolbox.Volley
+import com.jorfald.moreactivities.LOGGED_IN_KEY
 import com.jorfald.moreactivities.R
-import com.jorfald.moreactivities.chat.MainActivity
+import com.jorfald.moreactivities.SHARED_PREF_FILENAME
+import com.jorfald.moreactivities.tabbar.MainActivity
+import kotlinx.coroutines.MainScope
 
 class LoginFragment : Fragment() {
 
@@ -58,12 +61,6 @@ class LoginFragment : Fragment() {
                 password
             ) { success ->
                 if (success) {
-                    val sharedPref = activity?.getSharedPreferences(
-                        LoginActivity.SHARED_PREF_FILENAME,
-                        Context.MODE_PRIVATE
-                    )
-                    sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, true)?.apply()
-
                     val intent = Intent(activity, MainActivity::class.java)
                     intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
                     startActivity(intent)

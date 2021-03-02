@@ -5,10 +5,14 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
-import java.lang.Exception
 
 class LoginViewModel : ViewModel() {
-    fun logInUser(requestQueue: RequestQueue, username: String, password: String, callBack: (Boolean) -> Unit) {
+    fun logInUser(
+        requestQueue: RequestQueue,
+        username: String,
+        password: String,
+        callBack: (Boolean) -> Unit
+    ) {
         var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/login"
         url += "?userName=$username&password=$password"
 
@@ -16,13 +20,8 @@ class LoginViewModel : ViewModel() {
             Request.Method.GET,
             url,
             { jsonResponse ->
-                try {
-                    val user = Gson().fromJson(jsonResponse, UserObject::class.java)
-
-                    callBack(true)
-                } catch (e: Exception) {
-                    callBack(false)
-                }
+                val user = Gson().fromJson(jsonResponse, UserObject::class.java)
+                callBack(true)
             },
             { errorObject ->
                 callBack(false)

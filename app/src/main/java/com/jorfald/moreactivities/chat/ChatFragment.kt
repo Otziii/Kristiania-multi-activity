@@ -1,6 +1,5 @@
 package com.jorfald.moreactivities.chat
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +19,7 @@ import com.jorfald.moreactivities.login.LoginActivity
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
-class MainFragment : Fragment() {
+class ChatFragment : Fragment() {
 
     private lateinit var viewModel: MainViewModel
 
@@ -64,12 +63,6 @@ class MainFragment : Fragment() {
 
     private fun setButtonListeners() {
         logOutButton.setOnClickListener {
-            val sharedPref = activity?.getSharedPreferences(
-                LoginActivity.SHARED_PREF_FILENAME,
-                Context.MODE_PRIVATE
-            )
-            sharedPref?.edit()?.putBoolean(LoginActivity.LOGGED_IN_KEY, false)?.apply()
-
             val intent = Intent(activity, LoginActivity::class.java)
             intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
             startActivity(intent)
@@ -135,7 +128,7 @@ class MainFragment : Fragment() {
             return
         }
 
-        timer = fixedRateTimer("chatFetchTimer", false, 0L, 5 * 1000) {
+        timer = fixedRateTimer("chatFetchTimer", false, 0L, 15 * 1000) {
             getChatMessages()
         }
     }

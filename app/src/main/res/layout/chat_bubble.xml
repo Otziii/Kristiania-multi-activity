@@ -23,11 +23,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/chat_text_view"
         android:layout_marginBottom="@dimen/space_small"
-        android:gravity="start"
         android:paddingStart="@dimen/space_small"
         android:paddingEnd="@dimen/space_small"
         android:textSize="@dimen/small_text"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/chat_text_view"
         app:layout_constraintTop_toBottomOf="@id/chat_text_view"
         tools:text="Øivind" />
 
