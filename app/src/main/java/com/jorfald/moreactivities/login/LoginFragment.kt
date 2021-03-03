@@ -12,11 +12,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.toolbox.Volley
-import com.jorfald.moreactivities.LOGGED_IN_KEY
-import com.jorfald.moreactivities.R
-import com.jorfald.moreactivities.SHARED_PREF_FILENAME
+import com.jorfald.moreactivities.*
 import com.jorfald.moreactivities.tabbar.MainActivity
-import kotlinx.coroutines.MainScope
 
 class LoginFragment : Fragment() {
 
@@ -59,8 +56,17 @@ class LoginFragment : Fragment() {
                 Volley.newRequestQueue(context),
                 username,
                 password
-            ) { success ->
-                if (success) {
+            ) { user ->
+                if (user != null) {
+                    val sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+                    val editor = sharedPreferences.edit()
+
+                    editor.putString(SHARED_PREFS_ID_KEY, user.id)
+                    editor.putString(SHARED_PREFS_USERNAME_KEY, user.userName)
+                    editor.putString(SHARED_PREFS_FIRSTNAME_KEY, user.firstName)
+
+                    editor.apply()
+
                     val intent = Intent(activity, MainActivity::class.java)
                     intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
                     startActivity(intent)

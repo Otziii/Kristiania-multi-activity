@@ -1,6 +1,8 @@
 package com.jorfald.moreactivities.chat
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.Volley
 import com.jorfald.moreactivities.R
-import com.jorfald.moreactivities.hideKeyboard
+import com.jorfald.moreactivities.SHARED_PREFS_ID_KEY
+import com.jorfald.moreactivities.SHARED_PREFS_NAME
+import com.jorfald.moreactivities.SHARED_PREFS_USERNAME_KEY
+import com.jorfald.moreactivities.extensions.hideKeyboard
 import com.jorfald.moreactivities.login.LoginActivity
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
@@ -30,6 +35,8 @@ class ChatFragment : Fragment() {
     private lateinit var sendButton: Button
 
     private var timer: Timer? = null
+
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +58,8 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
+
         setButtonListeners()
         initRecyclerView()
     }
@@ -63,30 +72,43 @@ class ChatFragment : Fragment() {
 
     private fun setButtonListeners() {
         logOutButton.setOnClickListener {
-            val intent = Intent(activity, LoginActivity::class.java)
-            intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
-            startActivity(intent)
+            logOutUser()
         }
 
         sendButton.setOnClickListener {
             val text = chatInput.text.toString()
-            val chatObject = ChatObject("wgV7RMZXD2", "Otziii", text)
 
-            if (text.isNotEmpty()) {
-                viewModel.sendChatMessage(Volley.newRequestQueue(context), chatObject) { success ->
-                    if (success) {
-                        activity?.hideKeyboard()
-                        chatInput.setText("")
-                        chatAdapter.addInstance(chatObject)
-                        scrollToBottom()
-                    } else {
-                        Toast.makeText(
-                            context,
-                            "Noe gikk galt. Kunne ikke sende melding.",
-                            Toast.LENGTH_LONG
-                        ).show()
+            val userId = sharedPreferences.getString(SHARED_PREFS_ID_KEY, null)
+            val username = sharedPreferences.getString(SHARED_PREFS_USERNAME_KEY, null)
+
+            if (userId != null && username != null) {
+                val chatObject = ChatObject(
+                    userId,
+                    username,
+                    text
+                )
+
+                if (text.isNotEmpty()) {
+                    viewModel.sendChatMessage(
+                        Volley.newRequestQueue(context),
+                        chatObject
+                    ) { success ->
+                        if (success) {
+                            activity?.hideKeyboard()
+                            chatInput.setText("")
+                            chatAdapter.addInstance(chatObject)
+                            scrollToBottom()
+                        } else {
+                            Toast.makeText(
+                                context,
+                                "Noe gikk galt. Kunne ikke sende melding.",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
                     }
                 }
+            } else {
+                logOutUser()
             }
         }
     }
@@ -95,11 +117,18 @@ class ChatFragment : Fragment() {
         val linearLayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = linearLayoutManager
 
-        chatAdapter = ChatAdapter(
-            listOf()
-        )
+        val userId = sharedPreferences.getString(SHARED_PREFS_ID_KEY, null)
 
-        recyclerView.adapter = chatAdapter
+        if (userId != null) {
+            chatAdapter = ChatAdapter(
+                listOf(),
+                userId
+            )
+
+            recyclerView.adapter = chatAdapter
+        } else {
+            logOutUser()
+        }
     }
 
     private fun getChatMessages() {
@@ -131,6 +160,14 @@ class ChatFragment : Fragment() {
         timer = fixedRateTimer("chatFetchTimer", false, 0L, 15 * 1000) {
             getChatMessages()
         }
+    }
+
+    private fun logOutUser() {
+        sharedPreferences.edit().clear().apply()
+
+        val intent = Intent(activity, LoginActivity::class.java)
+        intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
+        startActivity(intent)
     }
 
     override fun onPause() {

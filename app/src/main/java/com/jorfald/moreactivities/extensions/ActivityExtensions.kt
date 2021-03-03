@@ -1,4 +1,4 @@
-package com.jorfald.moreactivities
+package com.jorfald.moreactivities.extensions
 
 import android.app.Activity
 import android.content.Context

@@ -11,7 +11,7 @@ class LoginViewModel : ViewModel() {
         requestQueue: RequestQueue,
         username: String,
         password: String,
-        callBack: (Boolean) -> Unit
+        callBack: (UserObject?) -> Unit
     ) {
         var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/login"
         url += "?userName=$username&password=$password"
@@ -21,10 +21,10 @@ class LoginViewModel : ViewModel() {
             url,
             { jsonResponse ->
                 val user = Gson().fromJson(jsonResponse, UserObject::class.java)
-                callBack(true)
+                callBack(user)
             },
             { errorObject ->
-                callBack(false)
+                callBack(null)
             }
         )
 
