@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MoreActivities</string>
+    <string name="app_name">Small Talk</string>
     <string name="title_activity_login">LoginActivity</string>
     <!--
     This string is used for square devices and overridden by hello_world in

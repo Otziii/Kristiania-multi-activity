@@ -23,7 +23,7 @@ class LoginViewModel : ViewModel() {
                 val user = Gson().fromJson(jsonResponse, UserObject::class.java)
                 callBack(user)
             },
-            { errorObject ->
+            {
                 callBack(null)
             }
         )
