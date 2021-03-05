@@ -33,6 +33,8 @@ class LoginFragment : Fragment() {
         usernameEditText = view.findViewById(R.id.login_username_input)
         passwordEditText = view.findViewById(R.id.login_password_input)
 
+        // TEST KOMMENTAR 123
+
         return view
     }
 
