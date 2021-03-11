@@ -4,6 +4,8 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.recyclerview.widget.RecyclerView
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ChatAdapter(
     private var dataSet: List<ChatObject>,
@@ -25,7 +27,15 @@ class ChatAdapter(
         val chatObject = dataSet[position]
 
         holder.view.setChatText(chatObject.message)
-        holder.view.setAuthorText(chatObject.userName.capitalize())
+
+        val dateOfMessage = Date(chatObject.timestamp)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateOfMessage
+        val timeFormat = SimpleDateFormat("HH:mm dd/MM/yyyy")
+
+        val authorText = "${chatObject.userName.capitalize()} - ${timeFormat.format(calendar.time)}"
+
+        holder.view.setAuthorText(authorText)
 
         holder.view.setSelfAuthor(chatObject.userId == userId)
     }
