@@ -1,5 +1,6 @@
 package com.jorfald.moreactivities.chat
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -11,13 +12,22 @@ import org.json.JSONObject
 import java.lang.reflect.Type
 
 
-class MainViewModel : ViewModel() {
+class ChatViewModel : ViewModel() {
+
+    val isLoading = MutableLiveData<Boolean>(false)
+    val chatMessagesLiveData = MutableLiveData<List<ChatObject>>()
+
+    fun showLoader() {
+        isLoading.postValue(true)
+    }
+
     fun getChatMessages(
+        userId: String?,
         queue: RequestQueue,
-        successCallback: (List<ChatObject>) -> Unit,
         errorCallback: () -> Unit,
     ) {
-        val url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/messages"
+        var url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/messages"
+        url += "?userId=$userId"
 
         // Request a string response from the provided URL.
         val stringRequest = StringRequest(
@@ -27,10 +37,15 @@ class MainViewModel : ViewModel() {
                 val listType: Type = object : TypeToken<List<ChatObject?>?>() {}.type
                 val chatMessages = Gson().fromJson<List<ChatObject>>(response, listType)
 
-                successCallback(chatMessages)
+                if (chatMessagesLiveData.value != chatMessages) {
+                    chatMessagesLiveData.postValue(chatMessages)
+                }
+
+                isLoading.postValue(false)
             },
             {
                 errorCallback()
+                isLoading.postValue(false)
             }
         )
 
@@ -38,7 +53,11 @@ class MainViewModel : ViewModel() {
         queue.add(stringRequest)
     }
 
-    fun sendChatMessage(requestQueue: RequestQueue, chatObject: ChatObject, callback: (Boolean) -> Unit) {
+    fun sendChatMessage(
+        requestQueue: RequestQueue,
+        chatObject: ChatObject,
+        callback: (Boolean) -> Unit
+    ) {
         val url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/sendMessage"
         val chatJson = Gson().toJson(chatObject)
 
@@ -46,10 +65,10 @@ class MainViewModel : ViewModel() {
             Request.Method.POST,
             url,
             JSONObject(chatJson),
-            { jsonObjectResponse ->
+            { _ ->
                 callback(true)
             },
-            { error ->
+            { _ ->
                 callback(false)
             }
         )

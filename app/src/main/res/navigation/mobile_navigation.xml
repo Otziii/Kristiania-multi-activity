@@ -11,6 +11,6 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.jorfald.moreactivities.chat.ChatFragment"
+        android:name="com.jorfald.moreactivities.profile.ProfileFragment"
         android:label="@string/title_notifications" />
 </navigation>
