@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.jorfald.moreactivities.notifications.NotificationReceivedListener
 import org.json.JSONObject
 
 class SmallTalkFirebaseMessagingService : FirebaseMessagingService() {
@@ -29,6 +30,8 @@ class SmallTalkFirebaseMessagingService : FirebaseMessagingService() {
 
         message.data["user_id"]?.let {
             // Go directly to the User Page, for example
+            print("Handled!")
+            return
         }
 
         // By now - just refresh a Chat Fragment

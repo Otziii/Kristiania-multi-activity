@@ -38,8 +38,9 @@ class SplashActivity : AppCompatActivity() {
 
         // Has App started with a Notification?
         intent.extras?.let {
-            (it["user_id"] as? String)?.let {
+            (it["user_id"] as? String)?.let { userId ->
                 // Go directly to the User Page, for example
+                Log.d("SplashActivity", "User_id: $userId")
             }
         }
 
