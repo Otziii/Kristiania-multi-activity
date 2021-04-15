@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "277847228058",
+    "firebase_url": "https://smalltalk-3bfb8-default-rtdb.firebaseio.com",
+    "project_id": "smalltalk-3bfb8",
+    "storage_bucket": "smalltalk-3bfb8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277847228058:android:0d911c0b726c5ac4ec6923",
+        "android_client_info": {
+          "package_name": "com.jorfald.moreactivities"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277847228058-houle91ftid3efsrelpp398ecmjj6mv4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jorfald.moreactivities",
+            "certificate_hash": "97b2704682466c7f318da9c95051c157eb5faad6"
+          }
+        },
+        {
+          "client_id": "277847228058-tjckpu832ntjofarirm933v75kccsvs7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRUypsI_sUB5_gSaRAxoHa9PyviZqZFWg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277847228058-tjckpu832ntjofarirm933v75kccsvs7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

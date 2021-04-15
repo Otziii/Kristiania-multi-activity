@@ -1,6 +1,7 @@
 package com.jorfald.moreactivities.chat
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +15,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.Volley
-import com.jorfald.moreactivities.R
-import com.jorfald.moreactivities.UserManager
+import com.jorfald.moreactivities.*
 import com.jorfald.moreactivities.extensions.hideKeyboard
-import com.jorfald.moreactivities.tabbar.MainActivity
+import com.jorfald.moreactivities.notifications.NotificationReceivedListener
+import com.jorfald.moreactivities.notifications.SmallTalkFirebaseMessagingService
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
-class ChatFragment : Fragment() {
+class ChatFragment : Fragment(), NotificationReceivedListener.OnNotificationReceivedListener {
 
     private lateinit var viewModel: ChatViewModel
 
@@ -58,6 +59,7 @@ class ChatFragment : Fragment() {
 
         bindObservers()
         setButtonListeners()
+        subscribeToNotifications()
         initRecyclerView()
     }
 
@@ -79,6 +81,10 @@ class ChatFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner, { isLoading ->
             loader.isVisible = isLoading
         })
+    }
+
+    private fun subscribeToNotifications() {
+        SmallTalkFirebaseMessagingService.notificationReceivedListener.setOnNotificationReceivedListener(this)
     }
 
     private fun setButtonListeners() {
@@ -153,6 +159,12 @@ class ChatFragment : Fragment() {
 
         timer?.cancel()
         timer = null
+    }
+
+    // NB! It's been called from a background thread!
+    override fun onNotificationReceived() {
+        Log.d("ChatFragment", "We got a message while we've been on the chat page; Reloading!")
+        getChatMessages()
     }
 }
 
