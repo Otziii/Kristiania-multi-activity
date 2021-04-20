@@ -6,11 +6,11 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.jorfald.moreactivities.chat.ChatFragment"
+        android:name="com.jorfald.smalltalk.chat.ChatFragment"
         android:label="@string/title_home" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.jorfald.moreactivities.profile.ProfileFragment"
+        android:name="com.jorfald.smalltalk.profile.ProfileFragment"
         android:label="@string/title_notifications" />
 </navigation>
