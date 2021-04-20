@@ -8,6 +8,11 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.jorfald.smalltalk.database.ChatDAO
+import com.jorfald.smalltalk.database.ChatObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.lang.reflect.Type
 
@@ -65,15 +70,37 @@ class ChatViewModel : ViewModel() {
             Request.Method.POST,
             url,
             JSONObject(chatJson),
-            { _ ->
+            {
                 callback(true)
             },
-            { _ ->
+            {
                 callback(false)
             }
         )
 
         // Add the request to the RequestQueue.
         requestQueue.add(request)
+    }
+
+    fun saveChat(chatDAO: ChatDAO, newList: List<ChatObject>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val currentList = chatDAO.getAllMessages()
+
+            if (currentList.size < newList.size) {
+                chatDAO.deleteAllMessages()
+                chatDAO.insertChatMessages(newList)
+            }
+        }
+    }
+
+    fun getChatMessagesFromDatabase(chatDAO: ChatDAO) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val messages = chatDAO.getAllMessages()
+            chatMessagesLiveData.postValue(messages)
+
+            if (messages.isEmpty()) {
+                isLoading.postValue(true)
+            }
+        }
     }
 }

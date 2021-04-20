@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.toolbox.Volley
 import com.jorfald.smalltalk.R
 import com.jorfald.smalltalk.UserManager
+import com.jorfald.smalltalk.database.AppDatabase
+import com.jorfald.smalltalk.database.ChatDAO
+import com.jorfald.smalltalk.database.ChatObject
 import com.jorfald.smalltalk.extensions.hideKeyboard
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
@@ -32,6 +35,7 @@ class ChatFragment : Fragment() {
 
     private var timer: Timer? = null
     private val user = UserManager.loggedInUser
+    private lateinit var chatDAO: ChatDAO
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,20 +59,24 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        chatDAO = AppDatabase.getDatabase(requireContext()).chatDAO()
+
         bindObservers()
         setButtonListeners()
         initRecyclerView()
+        viewModel.getChatMessagesFromDatabase(chatDAO)
     }
 
     override fun onResume() {
         super.onResume()
 
-        viewModel.showLoader()
         startChatFetchTimer()
     }
 
     private fun bindObservers() {
         viewModel.chatMessagesLiveData.observe(viewLifecycleOwner, { newList ->
+            viewModel.saveChat(chatDAO, newList)
+
             activity?.runOnUiThread {
                 chatAdapter.updateData(newList)
                 scrollToBottom()
@@ -84,7 +92,7 @@ class ChatFragment : Fragment() {
         sendButton.setOnClickListener {
             val text = chatInput.text.toString()
 
-            val chatObject = ChatObject(user.id, user.userName, text, Date().time)
+            val chatObject = ChatObject(0, user.id, user.userName, text, Date().time)
 
             if (text.isNotEmpty()) {
                 viewModel.sendChatMessage(

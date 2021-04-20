@@ -26,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun logOutUser() {
-        val context = this
         CoroutineScope(Dispatchers.IO).launch {
-            val userDAO = AppDatabase.getDatabase(context).userDAO()
-            userDAO.removeUser(UserManager.loggedInUser)
+            val chatDAO = AppDatabase.getDatabase(this@MainActivity).chatDAO()
+            chatDAO.deleteAllMessages()
 
-            val intent = Intent(context, LoginActivity::class.java)
+            val userDAO = AppDatabase.getDatabase(this@MainActivity).userDAO()
+            userDAO.deleteUser(UserManager.loggedInUser)
+
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
             intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
             startActivity(intent)
         }

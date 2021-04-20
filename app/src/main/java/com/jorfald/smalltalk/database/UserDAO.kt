@@ -5,11 +5,11 @@ import androidx.room.*
 @Dao
 interface UserDAO {
     @Delete
-    fun removeUser(user: UserObject)
+    fun deleteUser(userToDelete: UserObject)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: UserObject)
+    fun insertUser(userToInsert: UserObject)
 
     @Query("SELECT * FROM user_table LIMIT 1")
-    fun getUser() : UserObject?
+    fun getUser(): UserObject
 }
