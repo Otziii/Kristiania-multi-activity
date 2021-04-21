@@ -11,5 +11,5 @@ interface UserDAO {
     fun insertUser(userToInsert: UserObject)
 
     @Query("SELECT * FROM user_table LIMIT 1")
-    fun getUser(): UserObject
+    fun getUser(): UserObject?
 }

@@ -17,8 +17,7 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val userDao = AppDatabase.getDatabase(this).userDAO()
-        splashViewModel.checkIfUserIsLoggedIn(userDao) { isLoggedIn ->
+        splashViewModel.checkIfUserIsLoggedIn { isLoggedIn ->
             val activityIntent = if (isLoggedIn) {
                 Intent(this, MainActivity::class.java)
             } else {

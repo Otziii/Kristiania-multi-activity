@@ -4,17 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.jorfald.smalltalk.UserManager
 import com.jorfald.smalltalk.database.UserDAO
+import com.jorfald.smalltalk.login.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
-    fun checkIfUserIsLoggedIn(userDao: UserDAO, callback: (Boolean) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val user = userDao.getUser()
 
-            if (user != null) {
-                UserManager.loggedInUser = user
-            }
+    private val userRepository = UserRepository()
+
+    fun checkIfUserIsLoggedIn(callback: (Boolean) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val user = userRepository.getUser()
 
             callback(user != null)
         }

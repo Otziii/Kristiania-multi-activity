@@ -64,7 +64,7 @@ class ChatFragment : Fragment() {
         bindObservers()
         setButtonListeners()
         initRecyclerView()
-        viewModel.getChatMessagesFromDatabase(chatDAO)
+        viewModel.getChatMessagesFromDatabase()
     }
 
     override fun onResume() {
@@ -75,7 +75,7 @@ class ChatFragment : Fragment() {
 
     private fun bindObservers() {
         viewModel.chatMessagesLiveData.observe(viewLifecycleOwner, { newList ->
-            viewModel.saveChat(chatDAO, newList)
+            viewModel.saveChat(newList)
 
             activity?.runOnUiThread {
                 chatAdapter.updateData(newList)
@@ -91,12 +91,10 @@ class ChatFragment : Fragment() {
     private fun setButtonListeners() {
         sendButton.setOnClickListener {
             val text = chatInput.text.toString()
-
             val chatObject = ChatObject(0, user.id, user.userName, text, Date().time)
 
             if (text.isNotEmpty()) {
                 viewModel.sendChatMessage(
-                    Volley.newRequestQueue(context),
                     chatObject
                 ) { success ->
                     if (success) {
@@ -130,8 +128,7 @@ class ChatFragment : Fragment() {
 
     private fun getChatMessages() {
         viewModel.getChatMessages(
-            user.id,
-            Volley.newRequestQueue(context)
+            user.id
         ) {
             Toast.makeText(
                 context,

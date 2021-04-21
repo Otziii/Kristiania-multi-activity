@@ -13,9 +13,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.android.volley.toolbox.Volley
 import com.jorfald.smalltalk.R
-import com.jorfald.smalltalk.database.AppDatabase
 import com.jorfald.smalltalk.tabbar.MainActivity
 
 class LoginFragment : Fragment() {
@@ -59,16 +57,9 @@ class LoginFragment : Fragment() {
             val password = passwordEditText.text.toString()
 
             viewModel.logInUser(
-                Volley.newRequestQueue(context),
                 username,
                 password
             )
-
-            /*
-            viewModel.testCocktail(
-                Volley.newRequestQueue(context)
-            )
-             */
         }
     }
 
@@ -77,19 +68,14 @@ class LoginFragment : Fragment() {
             loginLoader.isVisible = showLoader
         }
 
-        viewModel.userLiveData.observe(viewLifecycleOwner) { user ->
-            val userDao = AppDatabase.getDatabase(requireContext()).userDAO()
-
-            viewModel.saveUser(userDao, user) {
+        viewModel.loginSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
                 val intent = Intent(activity, MainActivity::class.java)
                 intent.flags = intent.flags or Intent.FLAG_ACTIVITY_NO_HISTORY
                 startActivity(intent)
+            } else {
+                Toast.makeText(context, "Wrong username or password!", Toast.LENGTH_LONG).show()
             }
-        }
-
-        viewModel.loginError.observe(viewLifecycleOwner)
-        {
-            Toast.makeText(context, "Wrong username or password!", Toast.LENGTH_LONG).show()
         }
     }
 }
