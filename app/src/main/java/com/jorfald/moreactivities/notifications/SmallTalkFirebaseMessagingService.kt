@@ -7,6 +7,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
+import com.jorfald.moreactivities.UserManager
 import com.jorfald.moreactivities.notifications.NotificationReceivedListener
 import org.json.JSONObject
 
@@ -44,11 +45,17 @@ class SmallTalkFirebaseMessagingService : FirebaseMessagingService() {
             NotificationReceivedListener()
 
         fun subscribeDeviceTokenToPushNotifications(context: Context, token: String) {
+            val userId = UserManager.loggedInUser.id
+            if (userId.isEmpty()) {
+                // TODO: make sure you're unregister yourself on sign-out!
+                return
+            }
+
             val url = "https://us-central1-smalltalk-3bfb8.cloudfunctions.net/api/registerUserToken"
             Volley.newRequestQueue(context).add(JsonObjectRequest(
                 Request.Method.POST,
                 url,
-                JSONObject("{$token}"),
+                JSONObject("{\"userId\":\"$userId\",\"deviceToken\":\"$token\"}"),
                 {
                     Log.d("Notification Service", "Posted Device Token to server")
                 },
