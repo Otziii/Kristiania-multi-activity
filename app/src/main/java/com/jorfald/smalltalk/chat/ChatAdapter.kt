@@ -21,8 +21,6 @@ class ChatAdapter(
             WRAP_CONTENT
         )
 
-        
-
         return ChatViewHolder(view)
     }
 
@@ -41,6 +39,33 @@ class ChatAdapter(
         holder.view.setAuthorText(authorText)
 
         holder.view.setSelfAuthor(chatObject.userId == userId)
+
+        var previousItem: ChatObject? = null
+        if (position > 0) {
+            previousItem = dataSet[position - 1]
+        }
+
+        val thisItem = dataSet[position]
+
+        var nextItem: ChatObject? = null
+        if (position < dataSet.size - 1) {
+            nextItem = dataSet[position + 1]
+        }
+
+
+        if (previousItem?.userId == thisItem.userId) {
+            if (nextItem?.userId == thisItem.userId) {
+                // Midten av gruppe
+            } else {
+                // Slutt på gruppe
+            }
+        } else {
+            if (nextItem?.userId == thisItem.userId) {
+                // Starten av gruppe
+            } else {
+                // Enkel-chatbilde
+            }
+        }
     }
 
     override fun getItemCount(): Int {

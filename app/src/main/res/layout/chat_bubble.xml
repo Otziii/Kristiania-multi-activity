@@ -5,54 +5,79 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/chat_left_text_view"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="60dp"
-        android:background="@drawable/rounded_green_bg"
-        android:padding="@dimen/space_medium"
-        android:textColor="@color/white"
-        android:textSize="@dimen/regular_text"
+        android:orientation="vertical"
+        android:paddingStart="0dp"
+        android:paddingEnd="100dp"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Hei på deg. Dette er en test." />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/chat_left_author_text_view"
-        android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/chat_left_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@drawable/rounded_green_bg"
+            android:padding="@dimen/space_medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/regular_text"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Hei på deg. Dette er en test." />
+
+        <TextView
+            android:id="@+id/chat_left_author_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="@dimen/space_small"
+            android:paddingStart="@dimen/space_small"
+            android:paddingEnd="@dimen/space_small"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_left_text_view"
+            tools:text="Student" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_small"
-        android:paddingStart="@dimen/space_small"
-        android:paddingEnd="@dimen/space_small"
-        android:textSize="@dimen/small_text"
+        android:orientation="vertical"
+        android:paddingStart="100dp"
+        android:paddingEnd="0dp"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_left_text_view"
-        tools:text="Student" />
-
-    <TextView
-        android:id="@+id/chat_right_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="60dp"
-        android:background="@drawable/rounded_blue_bg"
-        android:padding="@dimen/space_medium"
-        android:textColor="@color/white"
-        android:textSize="@dimen/regular_text"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Hei på deg. Dette er en test." />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/chat_right_author_text_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/space_small"
-        android:paddingStart="@dimen/space_small"
-        android:paddingEnd="@dimen/space_small"
-        android:textSize="@dimen/small_text"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chat_right_text_view"
-        tools:text="Øivind" />
+        <TextView
+            android:id="@+id/chat_right_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@drawable/rounded_blue_bg"
+            android:padding="@dimen/space_medium"
+            android:textColor="@color/white"
+            android:textSize="@dimen/regular_text"
+            tools:text="Hei på deg." />
 
+        <TextView
+            android:id="@+id/chat_right_author_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginBottom="@dimen/space_small"
+            android:paddingStart="@dimen/space_small"
+            android:paddingEnd="@dimen/space_small"
+            android:textSize="@dimen/small_text"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chat_right_text_view"
+            tools:text="Øivind" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
