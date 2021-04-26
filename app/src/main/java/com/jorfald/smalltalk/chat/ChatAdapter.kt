@@ -21,6 +21,8 @@ class ChatAdapter(
             WRAP_CONTENT
         )
 
+        
+
         return ChatViewHolder(view)
     }
 
