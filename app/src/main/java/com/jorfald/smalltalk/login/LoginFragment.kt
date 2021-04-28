@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.jorfald.smalltalk.ConnectionManager
 import com.jorfald.smalltalk.R
 import com.jorfald.smalltalk.tabbar.MainActivity
 
@@ -53,13 +54,18 @@ class LoginFragment : Fragment() {
 
     private fun setButtons() {
         loginButton.setOnClickListener {
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
+            if (ConnectionManager.isOnline()) {
+                val username = usernameEditText.text.toString()
+                val password = passwordEditText.text.toString()
 
-            viewModel.logInUser(
-                username,
-                password
-            )
+                viewModel.logInUser(
+                    username,
+                    password
+                )
+            } else {
+                // Show dialog for no network
+                Toast.makeText(context, "No internet!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
