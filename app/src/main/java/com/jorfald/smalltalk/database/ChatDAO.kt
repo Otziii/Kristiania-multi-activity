@@ -15,4 +15,7 @@ interface ChatDAO {
 
     @Query("SELECT * FROM chat_message_table")
     fun getAllMessages(): List<ChatObject>
+
+    @Query("SELECT * FROM chat_message_table ORDER BY timestamp DESC LIMIT 1")
+    fun getLastMessage(): ChatObject
 }

@@ -13,21 +13,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SmallTalk">
-        <activity
-            android:name="com.jorfald.smalltalk.tabbar.MainActivity"
-            android:label="@string/title_activity_main" />
+
+        <receiver android:name=".ChatAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/chat_app_widget_info" />
+        </receiver>
 
         <activity
-            android:name="com.jorfald.smalltalk.splash.SplashActivity"
+            android:name=".tabbar.MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity
+            android:name=".splash.SplashActivity"
             android:label="@string/title_activity_splash"
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.jorfald.smalltalk.login.LoginActivity"
+            android:name=".login.LoginActivity"
             android:label="@string/title_activity_login" />
     </application>
 

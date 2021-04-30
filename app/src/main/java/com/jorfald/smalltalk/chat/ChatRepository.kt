@@ -10,6 +10,7 @@ import com.jorfald.smalltalk.BASE_URL
 import com.jorfald.smalltalk.SmallTalkApplication
 import com.jorfald.smalltalk.database.AppDatabase
 import com.jorfald.smalltalk.database.ChatObject
+import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.reflect.Type
 
@@ -27,6 +28,11 @@ class ChatRepository {
             Request.Method.GET,
             url,
             { response ->
+                val list = JSONArray(response)
+                for (chat in 0 until list.length()) {
+                    print(chat)
+                }
+
                 val listType: Type = object : TypeToken<List<ChatObject?>?>() {}.type
                 val chatMessages = Gson().fromJson<List<ChatObject>>(response, listType)
 
@@ -66,7 +72,7 @@ class ChatRepository {
     fun saveChatMessagesToDB(newList: List<ChatObject>) {
         val currentList = getChatMessagesFromDB()
 
-        if (newList.size != currentList.size) {
+        if (newList.lastOrNull() != currentList.lastOrNull()) {
             chatDAO.deleteAllMessages()
             chatDAO.insertChatMessages(newList)
         }
