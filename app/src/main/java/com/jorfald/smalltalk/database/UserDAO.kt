@@ -2,6 +2,7 @@ package com.jorfald.smalltalk.database
 
 import androidx.room.*
 
+// TODO: add test coverage
 @Dao
 interface UserDAO {
     @Delete

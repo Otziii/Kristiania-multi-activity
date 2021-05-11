@@ -8,6 +8,7 @@ import com.jorfald.smalltalk.database.ChatObject
 import java.text.SimpleDateFormat
 import java.util.*
 
+// TODO: add test coverage
 class ChatAdapter(
     private var dataSet: List<ChatObject>,
     private val userId: String
@@ -24,6 +25,7 @@ class ChatAdapter(
         return ChatViewHolder(view)
     }
 
+    // TODO: add test coverage
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val chatObject = dataSet[position]
 

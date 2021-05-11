@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
+// TODO: add test coverage
 @Dao
 interface ChatDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
