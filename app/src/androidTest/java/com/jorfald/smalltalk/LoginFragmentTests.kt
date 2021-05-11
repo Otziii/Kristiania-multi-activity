@@ -2,21 +2,16 @@ package com.jorfald.smalltalk
 
 import android.app.Activity
 import android.app.Application
-import android.app.Instrumentation
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.fragment.app.testing.withFragment
 import androidx.lifecycle.Lifecycle
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.jorfald.smalltalk.chat.ChatFragment
-import com.jorfald.smalltalk.chat.ChatViewModel
 import com.jorfald.smalltalk.database.UserObject
-import com.jorfald.smalltalk.login.LoginActivity
 import com.jorfald.smalltalk.login.LoginFragment
 import com.jorfald.smalltalk.login.LoginViewModel
 import com.jorfald.smalltalk.tabbar.MainActivity
@@ -26,8 +21,6 @@ import org.junit.runner.RunWith
 
 import org.junit.Assert.*
 import org.mockito.Mockito.doNothing
-import org.mockito.Mockito.mock
-import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.*
 import java.util.concurrent.CountDownLatch
 
@@ -36,7 +29,7 @@ import java.util.concurrent.CountDownLatch
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(AndroidJUnit4::class)
 class LoginFragmentTests {
 
     @Test

@@ -25,7 +25,7 @@ import org.mockito.kotlin.*
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-@RunWith(MockitoJUnitRunner::class)
+@RunWith(AndroidJUnit4::class)
 class ChatFragmentTests {
 
     @Test
