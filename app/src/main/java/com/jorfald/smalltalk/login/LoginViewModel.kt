@@ -7,14 +7,14 @@ import com.jorfald.smalltalk.database.UserObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+open class LoginViewModel : ViewModel() {
 
     val loginSuccess = MutableLiveData<Boolean>()
     val isLoading = MutableLiveData<Boolean>()
 
     private val userRepository = UserRepository()
 
-    fun logInUser(
+    open fun logInUser(
         username: String,
         password: String
     ) {

@@ -130,6 +130,10 @@ class ChatFragment : Fragment() {
         viewModel.getChatMessages(
             user.id
         ) {
+            if (context == null) {
+                return@getChatMessages
+            }
+
             Toast.makeText(
                 context,
                 "Noe gikk galt. Kunne ikke hente meldinger.",

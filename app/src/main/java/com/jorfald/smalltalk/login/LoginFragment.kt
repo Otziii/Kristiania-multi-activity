@@ -16,9 +16,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.jorfald.smalltalk.R
 import com.jorfald.smalltalk.tabbar.MainActivity
 
-class LoginFragment : Fragment() {
+open class LoginFragment : Fragment() {
 
-    private lateinit var viewModel: LoginViewModel
+    lateinit var viewModel: LoginViewModel
 
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
