@@ -2,21 +2,15 @@ package com.jorfald.smalltalk.chat
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.android.volley.Request
-import com.android.volley.RequestQueue
-import com.android.volley.toolbox.JsonObjectRequest
-import com.google.gson.Gson
-import com.jorfald.smalltalk.database.ChatDAO
 import com.jorfald.smalltalk.database.ChatObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.json.JSONObject
 
+// TODO: add test coverage
+open class ChatViewModel : ViewModel() {
 
-class ChatViewModel : ViewModel() {
-
-    private val chatRepository = ChatRepository()
+    var chatRepository = ChatRepository()
 
     val isLoading = MutableLiveData(false)
     val chatMessagesLiveData = MutableLiveData<List<ChatObject>>()
@@ -38,9 +32,9 @@ class ChatViewModel : ViewModel() {
         }
     }
 
-    fun sendChatMessage(
+    open fun sendChatMessage(
         chatObject: ChatObject,
-        callback: (Boolean) -> Unit
+        callback: ((Boolean) -> Unit)
     ) {
         chatRepository.sendMessage(chatObject, callback)
     }

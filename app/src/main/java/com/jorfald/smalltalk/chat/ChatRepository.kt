@@ -13,7 +13,7 @@ import com.jorfald.smalltalk.database.ChatObject
 import org.json.JSONObject
 import java.lang.reflect.Type
 
-class ChatRepository {
+open class ChatRepository {
 
     private val chatDAO =
         AppDatabase.getDatabase(SmallTalkApplication.application.applicationContext).chatDAO()
@@ -63,6 +63,7 @@ class ChatRepository {
         return chatDAO.getAllMessages()
     }
 
+    // TODO: add test coverage
     fun saveChatMessagesToDB(newList: List<ChatObject>) {
         val currentList = getChatMessagesFromDB()
 

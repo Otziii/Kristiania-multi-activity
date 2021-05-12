@@ -25,7 +25,7 @@ import kotlin.concurrent.fixedRateTimer
 
 class ChatFragment : Fragment() {
 
-    private lateinit var viewModel: ChatViewModel
+    lateinit var viewModel: ChatViewModel
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var chatAdapter: ChatAdapter
@@ -33,7 +33,7 @@ class ChatFragment : Fragment() {
     private lateinit var sendButton: Button
     private lateinit var loader: ProgressBar
 
-    private var timer: Timer? = null
+    var timer: Timer? = null
     private val user = UserManager.loggedInUser
     private lateinit var chatDAO: ChatDAO
 
@@ -130,6 +130,10 @@ class ChatFragment : Fragment() {
         viewModel.getChatMessages(
             user.id
         ) {
+            if (context == null) {
+                return@getChatMessages
+            }
+
             Toast.makeText(
                 context,
                 "Noe gikk galt. Kunne ikke hente meldinger.",
